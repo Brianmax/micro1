@@ -18,4 +18,8 @@ public class PersonaController {
         personaService.create(dni);
         return "Persona creada";
     }
+    @GetMapping("/hello")
+    public String hello() {
+        return "Hello";
+    }
 }
