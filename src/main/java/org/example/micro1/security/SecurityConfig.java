@@ -1,5 +1,6 @@
 package org.example.micro1.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -12,6 +13,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+    @Autowired
+    private JwtConverter jwtConverter;
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
@@ -21,7 +24,7 @@ public class SecurityConfig {
                 .oauth2ResourceServer(
                         oauth2->{
                             oauth2.jwt(
-                                    jwt->{});
+                                    jwt->jwt.jwtAuthenticationConverter(jwtConverter));
                         })
                 .sessionManagement(
                         session->session.sessionCreationPolicy(
